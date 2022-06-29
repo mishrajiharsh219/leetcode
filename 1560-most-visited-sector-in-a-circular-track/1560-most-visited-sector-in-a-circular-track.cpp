@@ -23,3 +23,46 @@ public:
         return ans;
     }
 };
+
+
+
+
+
+// There are 2 cases:
+
+// 1. if start <= end
+// **Example 1: **
+
+// n = 7  and  array = [1, 3, 5, 1, 2, 3]
+//    			1  2  3  4  5  6  7              --1st circle
+//    			1  2  3                              --2nd circle
+// 		Note: in this case ans will be [1, 2, 3] which are being repeated twice. i. e. range array[start] to array[end]
+// 		ans = [1,2,3]
+// Example 2:
+
+// 			n = 2 and array = [2, 1, 2, 1, 2, 1, 2]
+// 				2
+// 				1  2
+// 				1  2
+// 				1  2
+// 		Note: array[start] == array[end] so the ans is [2]
+// 		ans = [2]
+// 2. if start > end
+// Example 1
+
+// 			n = 2 and array = [2, 1, 2, 1, 2, 1]
+// 					 2
+// 				 1  2
+// 				 1  2
+// 				 1
+// 		Note: ans = [1 to array[end], array[start] to n]	in this case 1 to array[end]: [1]
+// 		and array[start] to n: [2]
+// 		ans = [1,2]
+// Example 2
+
+// 						 3  4  5
+// 				 1  2  3  4  5
+// 				 1
+// 		 Note: ans = 1 to array[end]  --->   [1] +
+// 		array[start] to n ---->  [3, 4, 5]					
+// 		ans = [1, 3, 4, 5]
