@@ -11,3 +11,5 @@ public:
         return ans;
     }
 };
+
+//for not median do: ans+=nums[right--]-nums[left++];
