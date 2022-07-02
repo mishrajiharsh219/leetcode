@@ -30,3 +30,7 @@ public:
 		return (max_h *1ll*max_w)%mod;
 	}
 };
+// If we had only horizontalCuts and we needed to find the max area of cake then problem would boil down to finding the max consecutive diff betwwen two hCuts * width that will be the max area of cake.
+// **And one more point to note is that the max area will be contributed by cuts who have maximum difference in between them.**
+// So taking the similar analogy we can find the max_h i.e maximum horizontal diff between two cuts and max_w i.e maximum vertical diff between two cuts.
+// and our ans will be multiplication of both.
