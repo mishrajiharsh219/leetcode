@@ -1,10 +1,11 @@
 class Solution {
 public:
     void findcomb(vector<vector<int>> &res,int i,int target,vector<int> &candidates,vector<int> &ds){
+         if(target==0)
+         {res.push_back(ds);
+            return;}
         if(i==candidates.size()){
-            if(target==0)
-                res.push_back(ds);
-            return;
+           return;
         }
         if(candidates[i]<=target){
         target-=candidates[i];
