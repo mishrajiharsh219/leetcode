@@ -4,7 +4,7 @@
 //1.legth(s1+s2)=length(s3)
 ////order of broken substring must be same as in the original strings
 //count of unique characters in s1+s2=count of those in s3.
-//
+//using sliding type with recursion and memoziation
 class Solution {
     unordered_map<string,bool> mem;
     bool check(string s1,string s2,string s3,int len1,int len2,int len3,int p1,int p2,int p3)
