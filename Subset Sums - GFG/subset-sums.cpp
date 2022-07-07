@@ -11,8 +11,9 @@ public:
              res.push_back(sum);
              return;
          }
-         subsum(res,i+1,n,a,sum+a[i]);
-         
+         sum+=a[i];
+         subsum(res,i+1,n,a,sum);
+         sum-=a[i];
          subsum(res,i+1,n,a,sum);
      }
     vector<int> subsetSums(vector<int> arr, int N)
