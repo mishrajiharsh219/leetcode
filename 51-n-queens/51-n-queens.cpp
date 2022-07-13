@@ -1,3 +1,5 @@
+//non optimized solution of n queen
+
 class Solution {
 public:
     bool isSafe(int row,int col,vector<string> &board,int n){
