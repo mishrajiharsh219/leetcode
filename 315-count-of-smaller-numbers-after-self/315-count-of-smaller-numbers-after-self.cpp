@@ -2,6 +2,9 @@
 //we can search every number in logn time
 //while putting in tree,whenever go in left side,increment parent count value
 //while going in right side increment the ans and parent freq +1;
+// use balanced bst to reduce complexity 
+// giving tle, hence merge sort approach
+// watch 3rd last approach for right approach of bst
 class Solution {
 protected:
     void merge_countSmaller(vector<int>& indices, int first, int last, 
