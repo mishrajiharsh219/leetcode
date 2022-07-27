@@ -9,6 +9,11 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+//create an stack and vector
+//push root in stack and whiile stack is non empty 
+//take top print its value in vector and pop
+// push right then left into stack
+//return vector
 class Solution {
 public:
     vector<int> preorderTraversal(TreeNode* root) {
