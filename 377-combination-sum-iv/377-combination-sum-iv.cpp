@@ -1,3 +1,4 @@
+//In both the top-down and bottom-up DP solutions, the time complexity is O(N * T) and the space complexity is O(T)
 //for the folow up question we have to put a limit k to the numbe of times a number can 
 //be used in combination
 //suppose a=[-1,1] and target=1
