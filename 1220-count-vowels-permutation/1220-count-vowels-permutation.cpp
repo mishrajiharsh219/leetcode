@@ -1,62 +1,54 @@
 class Solution {
 public:
-    
     int MOD=1e9+7;
-
-    long long int f(int n, int i, char c, vector<vector<int>> &dp, unordered_map<char, int> &mp){
+    
+   long long int rec(char c,int n,int i,vector<vector<int>> &dp,unordered_map<char,int> &mp){
+     if(i==n)
+        return 1;
         
-        if(i==n) return 1;
+    long long int count=0;
         
-        long long count = 0;
-        
-        if(dp[mp[c]][i]!=-1) return dp[mp[c]][i]%MOD;
+        if(dp[mp[c]][i]!=-1)
+            return dp[mp[c]][i]%MOD;
         
         if(c=='a'){
-		// after a only e is allowed
-            count += f(n, i+1, 'e', dp, mp);
+            count+=rec('e',n,i+1,dp,mp);
         }
         
-        if(c=='e'){
-		// after e only a and i are allowed
-            count += f(n, i+1, 'a', dp, mp);
-            count += f(n, i+1, 'i', dp, mp);
+        else if(c=='e')
+        {
+            count+=rec('a',n,i+1,dp,mp);
+            count+=rec('i',n,i+1,dp,mp);
         }
-        if(c=='i'){
-		// after i everthing except i is allowed
-            count += f(n, i+1, 'a', dp, mp);
-            count += f(n, i+1, 'e', dp, mp);
-            count += f(n, i+1, 'o', dp, mp);
-            count += f(n, i+1, 'u', dp, mp);
+        else if(c=='u')
+        {
+            count+=rec('a',n,i+1,dp,mp);
         }
-        if(c=='o'){
-		// after o only i and u are allowed
-            count += f(n, i+1, 'i', dp, mp);
-            count += f(n, i+1, 'u', dp, mp);
+        else if(c=='o'){
+            count+=rec('i',n,i+1,dp,mp);
+            count+=rec('u',n,i+1,dp,mp);
         }
-        
-        if(c=='u'){
-		// after u only a is allowed
-            count += f(n, i+1, 'a', dp, mp);
+        else{
+            count += rec('a',n,i+1,dp,mp);
+            count += rec('e',n,i+1,dp,mp);
+            count += rec('o',n,i+1,dp,mp);
+            count += rec('u',n,i+1,dp,mp);
         }
         
-        return dp[mp[c]][i] = count%MOD;
+        dp[mp[c]][i]=count%MOD;
+        return dp[mp[c]][i]%MOD;
         
     }
-    
     int countVowelPermutation(int n) {
-        
-		// map to convert char to int for using in dp vector for memoization purpose
-        unordered_map<char, int> mp;
-        mp['a'] = 0;
-        mp['e'] = 1;
-        mp['i'] = 2;
-        mp['o'] = 3;
-        mp['u'] = 4;
-        
-        vector<vector<int>> dp(5, vector<int>(n+1, -1));
-        long long cnt = f(n, 1, 'a', dp, mp) + f(n, 1, 'e', dp, mp) + f(n, 1, 'i', dp, mp) + f(n, 1, 'o', dp, mp) + f(n, 1, 'u', dp, mp); 
-        
-        return cnt%MOD;
-        
+        unordered_map<char,int>mp;
+        mp['a']=0;
+        mp['e']=1;
+        mp['i']=2;
+        mp['o']=3;
+        mp['u']=4;
+        vector<vector<int>> dp(5,vector<int>(n+1,-1));
+        long long int res=0;
+        res= rec('a',n,1,dp,mp)+rec('e',n,1,dp,mp)+rec('i',n,1,dp,mp)+rec('o',n,1,dp,mp)+rec('u',n,1,dp,mp);
+        return res%MOD;
     }
 };
