@@ -1,3 +1,6 @@
+//can be solved using stack alse
+//can be solved by fast and slow pointer also
+//can be solves using recursion or temp array also
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -11,16 +14,23 @@
 class Solution {
 public:
     bool isPalindrome(ListNode* head) {
-        vector<int> ans;
-        ListNode* temp= head;
-        while(temp!=NULL){
-            ans.push_back(temp->val);
-            temp=temp->next;
+      ListNode *fast=head,*slow=head,*temp,*prev=NULL;
+        while(fast && fast->next){
+            fast=fast->next->next;
+            temp=slow->next;
+            slow->next=prev;
+            prev=slow;
+            slow=temp;
         }
-        for(int i=0;i<ans.size()/2;i++){
-            if(ans[i]!=ans[ans.size()-i-1])
-                return false;
-        }
-        return true;
+        if(fast)
+            slow=slow->next;
+        else
+            slow=slow;
+        while(slow) // check if linked lists starting at prev and slow are equal
+		if(slow -> val != prev -> val)
+            return false;
+		else
+            slow = slow -> next, prev = prev -> next;
+	return true;
     }
 };
