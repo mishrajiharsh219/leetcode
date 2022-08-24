@@ -1,22 +1,41 @@
-class Solution {
+class Solution
+{
 public:
-    vector<int> pivotArray(vector<int>& nums, int pivot) {
-        vector<int> ans;
-        for(int i=0;i<nums.size();i++){
-            if(nums[i]<pivot){
-                ans.push_back(nums[i]);
+    vector<int> pivotArray(vector<int> &nums, int pivot)
+    {
+        int low = 0;
+        int same = 0;
+        int high;
+        for (auto n : nums)
+        {
+            if (n < pivot)
+            {
+                ++low;
+            }
+            else if (n == pivot)
+            {
+                ++same;
             }
         }
-         for(int i=0;i<nums.size();i++){
-            if(nums[i]==pivot){
-                ans.push_back(nums[i]);
+        vector<int> res(nums.size());
+        high = same + low;
+        same = low;
+        low = 0;
+        for (auto n : nums)
+        {
+            if (n < pivot)
+            {
+                res[low++] = n;
             }
-         }
-              for(int i=0;i<nums.size();i++){
-            if(nums[i]>pivot){
-                ans.push_back(nums[i]);
+            else if (n == pivot)
+            {
+                res[same++] = n;
+            }
+            else
+            {
+                res[high++] = n;
             }
         }
-             return ans;
+        return res;
     }
 };
