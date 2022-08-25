@@ -1,14 +1,15 @@
 class Solution {
 public:
     void helper(vector<string> &res,string &digits,map<int,string> &mp,string &ds,int i){
-        if(i==digits.size()){
-            res.push_back(ds);
-            return;
-        }
-      for(auto c:mp[digits[i]-'0']){
-          ds.push_back(c);
-          helper(res,digits,mp,ds,i+1);
-          ds.pop_back();
+       if(i==digits.size())
+       {
+           res.push_back(ds);
+           return;
+       }
+        for(char c: mp[int(digits[i])-int('0')]){
+            ds+=c;
+            helper(res,digits,mp,ds,i+1);
+            ds.pop_back();
         }
         return;
     }
