@@ -1,3 +1,4 @@
+//dfs solution 
 //connection btw the peices of land is in horizontal or vertical directions only not diagonal
 //o represent water
 //1 represent land
@@ -9,7 +10,7 @@ public:
         if(i<0 or j<0 or i>=r or j>=c or grid[i][j]!='1')
             return;
         
-        grid[i][j]='2';
+        grid[i][j]='2';//visited island
         
         markasvisited(grid,i+1,j,r,c);
         markasvisited(grid,i,j+1,r,c);
