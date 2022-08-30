@@ -30,7 +30,7 @@ public:
           l=pre[i];
           r=pre[nums.size()-1]-l;
           int x=lower_bound(pre.begin()+i+1,pre.end(),2*l)-pre.begin();
-          int y=upper_bound(pre.begin()+i+1,pre.begin()+nums.size()-1,l+r/2)-pre.begin();
+          int y=upper_bound(pre.begin()+i+1,pre.begin()+nums.size()-1,l+(r/2))-pre.begin();
             
             if(y>x)
                 ans+=y-x;
