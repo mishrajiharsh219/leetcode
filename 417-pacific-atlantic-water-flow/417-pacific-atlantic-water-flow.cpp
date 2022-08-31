@@ -25,13 +25,12 @@ public:
     vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
    vector<vector<int>> res;
         
-        int n=heights.size();
-        int m=heights[0].size();
-        if(n==0 or m==0)
-            return res;
+        int n=heights.size();//rows
+        int m=heights[0].size();//colums
         
         vector<vector<bool>> pacific(n,vector<bool>(m));
         vector<vector<bool>> atlantic(n,vector<bool>(m));
+        
         
        for(int i=0;i<n;i++){
         dfs(heights,pacific,i,0);
