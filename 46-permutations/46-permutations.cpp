@@ -10,7 +10,7 @@ public:
                 if(!freq[i]){
                     ds.push_back(nums[i]);
                      freq[i]=1;
-                perm(i+1,nums,res,freq,ds);
+                perm(i,nums,res,freq,ds);
                 freq[i]=0;
                 ds.pop_back();
             }
