@@ -18,7 +18,7 @@
  */
 class Solution {
 public:
-
+//remove only those which have zero value and no left and right subtree
     TreeNode* pruneTree(TreeNode* root) {
         if(!root)
             return NULL;
