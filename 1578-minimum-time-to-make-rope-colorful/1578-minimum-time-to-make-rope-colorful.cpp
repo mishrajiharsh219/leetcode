@@ -1,24 +1,13 @@
 class Solution {
 public:
-    int minCost(string colors, vector<int>& neededTime) {
-        int prevcost=0;
-        char prev='+';
-        int ans=0;
-        for(int i=0;i<colors.size();i++){
-            if(colors[i]==prev){
-                if(prevcost<neededTime[i]){
-                    ans+=prevcost;
-                    prevcost=neededTime[i];   
-                }
-                else{
-                    ans+=neededTime[i];
-                }
-            }
-            else{
-                prev=colors[i];
-                prevcost=neededTime[i];
+    int minCost(string s, vector<int>& cost) {
+         int res = 0;
+        for(int i=1; i<s.length(); i++) {
+            if (s[i] == s[i-1]) {
+                res += min(cost[i], cost[i-1]);
+                cost[i] = max(cost[i], cost[i-1]);
             }
         }
-        return ans;
+        return res; 
     }
 };
