@@ -12,28 +12,22 @@ public:
     string get(string key, int timestamp) {
         if(mp.count(key)==0)
             return "";
-        int start=0,end=mp[key].size();
-        while(start<end){
+        int start=0,end=mp[key].size()-1;
+        while(start<=end){
             int mid=(start+end)/2;
             if(mp[key][mid].first==timestamp){
                 return mp[key][mid].second;
             }
             else if(mp[key][mid].first>timestamp)
             {
-                end=mid;
+                end=mid-1;
             }
             else
             {
                 start=mid+1;
             }
         }
-         return (start> 0) ? mp[key][start-1].second : "";   
+         return (start> 0) ? mp[key][end].second : "";   
     }
 };
 
-/**
- * Your TimeMap object will be instantiated and called as such:
- * TimeMap* obj = new TimeMap();
- * obj->set(key,value,timestamp);
- * string param_2 = obj->get(key,timestamp);
- */
