@@ -22,11 +22,19 @@ public:
     
     int splitArray(vector<int>& nums, int k) {
         long long sum=0;
-        int low=0;
+        
+        int mini=INT_MAX;
+        for(int i=0;i<nums.size();i++)
+            mini=min(mini,nums[i]);
+        
+        int low=mini;
+        
         for(int i=0;i<nums.size();i++)
             sum+=nums[i];
+        
         int high=sum;
-        int res=INT_MAX;
+        
+        int res=0;
         while(low<=high){
             int mid=low+(high-low)/2;
             if(valid(nums,k,mid)){
