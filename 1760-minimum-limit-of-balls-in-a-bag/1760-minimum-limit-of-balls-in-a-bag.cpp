@@ -1,30 +1,31 @@
 class Solution {
 public:
-	int minimumSize(vector<int>& nums, int maxOperations) {
-		int start = 1, end = *max_element(nums.begin(), nums.end());
-		int minPenalty = end;
-		// binary search on possible range
-		while (start <= end) {
-			int penalty = start + (end-start)/2;
-			if (isPossible(nums, maxOperations, penalty))
-				minPenalty = penalty, end = penalty-1;
-			else
-				start = penalty+1;
-		}
-
-		return minPenalty;
-	}
-
-	bool isPossible(vector<int>& nums, int maxOperations, int penalty) {
-		int requiredOps = 0;
-		for (int n : nums) {
-			// no. of operations required to bring n less than or eq to curr assumed penalty
-			int x = n / penalty;
-			// if n is divisible by penalty, need to subtract 1
-			if (n % penalty == 0) x--;
-			requiredOps += x;
-		}
-		// getting current penalty is possible only if required ops is <= maxOps
-		return requiredOps <= maxOperations;
-	}
+    bool isvalid(vector<int> &nums,int curr_min,int maxoperations){
+        int operations=0;
+        for(int i=0;i<nums.size();i++){
+            operations+=(nums[i]/curr_min);
+            if(nums[i]%curr_min==0){
+                operations--;
+            }
+        }
+        if(operations<=maxoperations)
+            return true;
+        else
+            return false;
+    }
+    int minimumSize(vector<int>& nums, int maxOperations) {
+        int low=1;
+        int high=*max_element(nums.begin(),nums.end());
+  int res=high;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            if(isvalid(nums,mid,maxOperations)){
+                res=mid;
+                high=mid-1;
+            }
+            else
+                low=mid+1;
+        }
+        return res;
+    }
 };
