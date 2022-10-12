@@ -23,11 +23,11 @@ public:
     int splitArray(vector<int>& nums, int k) {
         long long sum=0;
         
-        int mini=INT_MAX;
+        int maxi=INT_MIN;
         for(int i=0;i<nums.size();i++)
-            mini=min(mini,nums[i]);
+            maxi=max(maxi,nums[i]);
         
-        int low=mini;
+        int low=maxi;
         
         for(int i=0;i<nums.size();i++)
             sum+=nums[i];
