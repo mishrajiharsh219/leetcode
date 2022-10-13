@@ -1,5 +1,5 @@
-// minimum possible value is 1
-//     because then [1,1,1]
+// minimum possible value is 0
+//     because then [0,0,0]
 //     max sum of array is original array[4,9,3]
 //     because array sum can oly be decreased by operations
 class Solution {
