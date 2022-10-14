@@ -1,3 +1,4 @@
+// We can solve this problem with two pointer approach: idea is to make two pointers - fast pointer(jumps two node) and slow pointer(jumps one node). And when fast pointer reaches end, slow pointer would have reached middle element.
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -11,27 +12,14 @@
 class Solution {
 public:
     ListNode* deleteMiddle(ListNode* head) {
-        if(head->next==NULL)
-            return NULL;
-        if(head->next->next==NULL)
-        {
-            head->next=NULL;
-            return head;
-        }
-        int length=0;
-        ListNode *start=head;
-        ListNode *temp= head;
-        while(temp!=NULL){
-            length++;
-            temp=temp->next;
-        }
-        int mid=floor(length/2);
-        mid=mid-1;
-        ListNode* temp2=start;
-        while(mid--){
-            temp2=temp2->next;
-        }
-        temp2->next=temp2->next->next;
-        return start;
+    if (head->next == nullptr)
+        return nullptr;
+    auto slow = head, fast = head->next->next;
+    while (fast != nullptr && fast->next != nullptr) {
+        fast = fast->next->next;
+        slow = slow->next;
     }
+    slow->next = slow->next->next;
+    return head;
+}
 };
