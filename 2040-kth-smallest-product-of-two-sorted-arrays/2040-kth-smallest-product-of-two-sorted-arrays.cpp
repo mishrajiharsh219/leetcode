@@ -17,7 +17,9 @@ public:
             else if(val<0)
                 cnt+=findminIndex(nums2,val,midval);
         }
-        return cnt>=k;
+       if(cnt>=k)
+           return true;
+        return false;
     }
     
     int findmaxIndex(vector<int>&nums2 , long long  val , long long midval)
@@ -38,7 +40,7 @@ public:
     
     int findminIndex(vector<int>&nums2 , long long  val , long long midval)
     {
-        int l = 0  , r = nums2.size()-1 , res=  r+1;
+        int l = 0  , r = nums2.size()-1 , res=nums2.size();
         while(l<=r)
         {
             long long mid = (l+r)/2;
