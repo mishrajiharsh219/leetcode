@@ -9,10 +9,10 @@ public:
             return dp[i][days];
         }
         int result=INT_MAX;
-        int currdiff=INT_MIN;
+        int currdifficulty=INT_MIN;
         for(int j=i;j<=n-days;j++){
-            currdiff=max(currdiff,jobs[j]);
-            result=min(result,currdiff+solve(jobs,days-1,j+1,n));
+            currdifficulty=max(currdifficulty,jobs[j]);
+            result=min(result,currdifficulty+solve(jobs,days-1,j+1,n));
         }
         dp[i][days]=result;
         return dp[i][days];
