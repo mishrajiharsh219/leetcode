@@ -1,31 +1,18 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+// In-order traversal of BST yields sorted sequence. So, we just need to subtract the previous element from the current one, and keep track of the minimum. We need O(1) memory as we only store the previous element, but we still need O(h) for the stack.
 class Solution {
 public:
-    int ans=INT_MAX;
-    void preorder(TreeNode* root,vector<int> &res){
-       if(root==NULL)
-           return;
-        res.push_back(root->val);
-        preorder(root->left,res);
-        preorder(root->right,res);
-    }
-    int getMinimumDifference(TreeNode* root) {
-        vector<int> res;
-        preorder(root,res);
-        sort(res.begin(),res.end());
-        for(int i=0;i<res.size()-1;i++){
-            ans=min(ans,abs(res[i]-res[i+1]));
-        }
-        return ans;
-    }
+   int inorderTraverse(TreeNode* root, int& val, int& min_dif) {
+    if (root->left != NULL)
+        inorderTraverse(root->left, val, min_dif);
+    if (val >= 0) 
+        min_dif = min(min_dif, root->val - val);
+    val = root->val;
+    if (root->right != NULL) 
+        inorderTraverse(root->right, val, min_dif);
+    return min_dif;
+}
+int getMinimumDifference(TreeNode* root) {
+    auto min_dif = INT_MAX, val = -1;
+    return inorderTraverse(root, val, min_dif);
+}
 };
