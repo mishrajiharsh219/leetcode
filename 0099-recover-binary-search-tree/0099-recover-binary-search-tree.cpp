@@ -11,27 +11,31 @@
  */
 class Solution {
 public:
-    vector<int> inorder;
+    TreeNode* prev=new TreeNode(INT_MIN);
+    TreeNode* first;
+    TreeNode* mid;
+    TreeNode* last;
+    void dfs(TreeNode* root){
+        if(root==NULL)
+            return;
+        dfs(root->left);
+        
+        if(prev and (root->val<prev->val)){
+         if(first==NULL){
+           first=prev;
+          mid=root;   
+         }
+        else
+            last=root;
+        }
+        prev=root;
+        dfs(root->right);
+    }
     void recoverTree(TreeNode* root) {
         dfs(root);
-        sort(inorder.begin(),inorder.end());
-        int i=0;
-        check(root,inorder,i);
-    }
-    void check(TreeNode* root, vector<int> &in,int &i){
-        if(root->left)
-        check(root->left,inorder,i);
-        if(root->val!=inorder[i])
-            root->val=inorder[i];
-        i++;
-        if(root->right)
-        check(root->right,inorder,i);
-    }
-    void dfs(TreeNode* root){
-        if(root->left)
-            dfs(root->left);
-        inorder.push_back(root->val);
-        if(root->right)
-            dfs(root->right);
+        if(first and last)
+        swap(first->val,last->val);
+        else
+            swap(first->val,mid->val);
     }
 };
