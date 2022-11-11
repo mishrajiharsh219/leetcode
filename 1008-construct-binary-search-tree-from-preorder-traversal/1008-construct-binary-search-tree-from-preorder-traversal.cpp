@@ -12,20 +12,20 @@
 class Solution {
 public:
     TreeNode* bstFromPreorder(vector<int>& preorder) {
-        if(preorder.size()==0)
-            return NULL;
-        TreeNode* root=new TreeNode(preorder[0]);
-        vector<int> left;
-        vector<int> right;
-        for(int i=1;i<preorder.size();i++)
-        {
-            if(preorder[i]>preorder[0])
-                right.push_back(preorder[i]);
-            else
-                left.push_back(preorder[i]);
-        }
-        root->left=bstFromPreorder(left);
-        root->right=bstFromPreorder(right);
+       TreeNode* root=new TreeNode(preorder[0]);
+        int i=1;
+        root->left=helper(i,root->val,preorder);
+        root->right=helper(i,INT_MAX,preorder);
+        return root;
+    }
+    TreeNode* helper(int &i,int upperbound,vector<int> &preorder){
+       if(i==preorder.size() or preorder[i]>upperbound)
+           return NULL;
+      
+       TreeNode* root=new TreeNode(preorder[i]);
+        i++;
+       root->left=helper(i,root->val,preorder);
+        root->right=helper(i,upperbound,preorder);
         return root;
     }
 };
