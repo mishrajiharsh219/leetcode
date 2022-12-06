@@ -6,12 +6,11 @@ public:
         size=10;
         m.resize(size);
     }
-    
     int hash(int key){
         return key%size;
     }
     list<int>::iterator search(int key){
-    int i=hash(key);
+        int i=hash(key);
         return find(m[i].begin(),m[i].end(),key);
     }
     void add(int key) {
@@ -23,13 +22,13 @@ public:
     
     void remove(int key) {
         if(!contains(key))
-             return;
+            return;
         int i=hash(key);
         m[i].erase(search(key));
     }
     
     bool contains(int key) {
-       int i=hash(key);
+        int i=hash(key);
         if(search(key)!=m[i].end())
             return true;
         return false;
