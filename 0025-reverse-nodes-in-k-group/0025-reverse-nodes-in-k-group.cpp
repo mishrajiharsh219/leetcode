@@ -27,7 +27,7 @@ public:
         
    ListNode* dummy=new ListNode(-1);
    dummy->next=head;
-   ListNode *start=head,*beforestart=dummy,*end=start;
+   ListNode *beforestart=dummy,*end=head;
    int i=0;
         while(end!=NULL){
        i++;
