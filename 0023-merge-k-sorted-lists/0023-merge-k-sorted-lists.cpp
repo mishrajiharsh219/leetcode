@@ -10,21 +10,30 @@
  */
 class Solution {
 public:
-    ListNode* mergeKLists(vector<ListNode*>& lists) {
-           multimap<int, ListNode*>m;
-        for(auto &it : lists){
-            ListNode *head = it;
-            while(head){
-                m.insert(pair{head->val, head});
-                head = head->next;
-            }
+   
+    class cmp{
+         public:
+      bool operator()(ListNode* l1,ListNode* l2){
+        return l1->val>l2->val;
+    }
+    };
+    ListNode* mergeKLists(vector<ListNode*>& list) {
+        priority_queue<ListNode*,vector<ListNode*>,cmp> q;
+        for(int i=0;i<list.size();i++){
+            if(list[i]!=NULL)
+            q.push(list[i]);
         }
-        ListNode *dummy = new ListNode(-1);
-        ListNode *tail = dummy;
-        for(auto &it : m){
-            tail->next = it.second;
-            tail = it.second;
+        ListNode* ans=new ListNode(-1);
+        ListNode* tail=ans;
+        while(!q.empty())
+        {
+        ListNode* temp=q.top();
+        q.pop();
+        tail->next=temp;
+        tail=temp;
+        if(temp->next!=NULL)
+            q.push(temp->next);
         }
-        return dummy->next;
+        return ans->next;
     }
 };
