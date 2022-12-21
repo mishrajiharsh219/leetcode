@@ -11,12 +11,14 @@ public:
     bool hasCycle(ListNode *head) {
         if(head==NULL or head->next==NULL)
             return false;
-        set<ListNode*> s;
-        while(head!=NULL){
-            if(s.find(head)!=s.end())
+       ListNode* slow=head;
+        ListNode* fast=head;
+        while(fast!=NULL and fast->next!=NULL){
+            slow=slow->next;
+            fast=fast->next->next;
+        
+            if(fast==slow)
                 return true;
-            s.insert(head);
-            head=head->next;
         }
         return false;
     }
