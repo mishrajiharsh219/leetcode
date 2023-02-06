@@ -9,16 +9,17 @@
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+      set<ListNode*> s;
         ListNode* a=headA;
-        ListNode* b=headB;
         while(a!=NULL){
-            if(a==b)
-                return a;
-        b=b->next; 
-            if(b==NULL){
-                b=headB;
-                a=a->next;
-            }
+        s.insert(a);
+            a=a->next;
+        }
+        ListNode* b=headB;
+        while(b!=NULL){
+            if(s.find(b)!=s.end())
+                return b;
+            b=b->next;
         }
         return NULL;
     }
