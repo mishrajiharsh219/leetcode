@@ -10,40 +10,58 @@
  */
 class Solution {
 public:
-    ListNode* reverse(ListNode* head){
-        if(head==NULL)
-            return NULL;
-        if(head->next==NULL)
-            return head;
-        ListNode* pre=NULL, *curr=head,*n=head->next;
-        while(curr){
-            curr->next=pre;
-            pre=curr;
-            curr=n;
-            if(n!=NULL)
-                n=n->next;
+    int size(ListNode* head){
+        int s=0;
+        while(head){
+            s++;
+            head=head->next;
         }
-        return pre;
+        return s;
     }
-    ListNode* addTwoNumbers(ListNode* list1, ListNode* list2) {
-        ListNode* l1=reverse(list1);
-        ListNode* l2=reverse(list2);
-        
-        ListNode* newhead=new ListNode(-1);
-        ListNode* org=newhead;
-        int extra=0;
-        while(l1 or l2 or extra){
-            int ans= (l1?l1->val:0)+(l2?l2->val:0)+extra;
-            int now=ans%10;
-             newhead->next=new ListNode(now);
-             extra=ans/10;
-            newhead=newhead->next;
-            if(l1!=NULL)
-                l1=l1->next;
-            if(l2!=NULL)
-                l2=l2->next;
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        int s1=size(l1);
+        int s2=size(l2);
+        ListNode* res=NULL;
+        ListNode* n=NULL;
+        while(l1 or l2){
+            int v1=0,v2=0;
+         if(s1>=s2)   
+         {
+             v1+=l1?l1->val:0;
+             l1=l1->next;
+             s1--;
+         }
+         if(s2>=s1+1){
+             v2+=l2?l2->val:0;
+             l2=l2->next;
+             s2--;
+         }  
+        n= new ListNode(v1+v2);
+       n->next=res;
+       res=n;
         }
-        org->next=reverse(org->next);
-        return org->next;
+       int carry = 0;
+    res = NULL;
+    // Now, let's perform the normalization.
+    while (n != NULL) {
+        n->val += carry;
+        if (n->val >= 10) {
+            n->val = n->val % 10;
+            carry = 1;
+        } else {
+            carry = 0;
+        }
+        ListNode* buf = n->next;
+        n->next = res;
+        res = n;
+        n = buf;
+    }
+    if (carry > 0) {
+        n = new ListNode(1);
+        n->next = res;
+        res = n;
+    }
+    return res;
+        
     }
 };
