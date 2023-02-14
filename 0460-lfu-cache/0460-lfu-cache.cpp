@@ -1,72 +1,75 @@
 class LFUCache {
-    public:
-    int capacity;  //max size of cache
-    unordered_map<int, pair<int,int>> cache;   //{key->{value,freq}};      
-    unordered_map<int, list<int>::iterator> address;     //key->address
-    unordered_map<int,list<int>> freqMap;                 //freq->list of keys
-    int minFreq=0;
-    
+public:
+        int cap;
+        int minfreq;
+        unordered_map<int,pair<int,int>> cache;     //{key->{value,freq}};
+        unordered_map<int,list<int>::iterator> address;     //{key,address};
+        unordered_map<int,list<int>> freqlist;       //freq->list of keys
+
     LFUCache(int capacity) {
-        this->capacity = capacity;
+        cap=capacity;
+        minfreq=0;
     }
     
     int get(int key) {
+        //if key is not present
         if(cache.count(key)==0)
             return -1;
         
-        updateFrequency(key);         
+        updatefreq(key);
         return cache[key].first;
     }
     
-    void put(int key, int value) 
-    {
-        if(this->capacity<=0) return;
-        // if key is already in cache
-        if(cache.count(key)!=0)
-        {
-            updateFrequency(key);            
-            cache[key].first = value; //update value in cache
+    void put(int key, int value) {
+        //if max size of cache is 0
+        if(cap<=0)
+            return;
+        //if key is already present then size will not be increased so direct update
+        if(cache.count(key)!=0){
+            updatefreq(key);
+            cache[key].first=value;
         }
-        else
-        {
-            if(cache.size() >= this->capacity)
+        // key need to be inserted
+        else{
+            //capacity exceeds maxcapacity
+            //if new element is inserted minfreq will always be 0
+            if(cache.size()>=cap)
             {
-                // remove last-element in the least-frequent-list, from cache
-                int leastFrequentKey = freqMap[minFreq].back();
-                cache.erase(leastFrequentKey);
-                address.erase(leastFrequentKey);
-                
-                // remove least frequent from freqMap
-                freqMap[minFreq].pop_back();
-            } 
+            int leastfreqkey=freqlist[minfreq].back();
+            cache.erase(leastfreqkey);
+            address.erase(leastfreqkey);
+            freqlist[minfreq].pop_back();
+            }
+            cache[key]={value,0};
+            freqlist[0].push_front(key);
+            address[key]=freqlist[0].begin();
             
-            // insert value and initialize frequency
-            cache[key] = {value, 0};
-            freqMap[0].push_front(key);
-            address[key] = freqMap[0].begin();
-            
-            minFreq=0;// reset min frequency
-        }
+            minfreq=0;
+            }
     }
-    
-    private:
-    void updateFrequency(int key)
-    {
-        int freq = cache[key].second++;
-        
-        // remove from prev frequency list
-        freqMap[freq].erase(address[key]);
-        
-        // append to updated frequency list
-        freqMap[freq+1].push_front(key);
-        
-        //update list pointer to new list begin
-        address[key] = freqMap[freq+1].begin();
-
-        // remove empty lists incase minFrequency raises
-         if(freqMap[minFreq].size()==0 ) 
-           {
-              freqMap.erase(minFreq++);
-           }
+   private:
+    void updatefreq(int key){
+        int currfreq=cache[key].second;
+        // increase the frequency in cache map
+        cache[key].second++;
+        //list always erases the addresses not values
+        freqlist[currfreq].erase(address[key]);
+        freqlist[currfreq+1].push_front(key);
+        address.erase(key);
+        address[key]=freqlist[currfreq+1].begin();
+        // if minfreq's size becomes zero
+        if(freqlist[minfreq].size()==0)
+            //delete old minfreq from freqlist
+        { freqlist.erase(minfreq);
+         //new minfreq
+        ++minfreq;
+        }
     }
 };
+
+/**
+ * Your LFUCache object will be instantiated and called as such:
+ * LFUCache* obj = new LFUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */
