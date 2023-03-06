@@ -1,18 +1,18 @@
 class Solution {
 public:
+    //arr[mid]==mid+1 in ideal case
+    //arr[mid]-(mid+1) will give missing elements till now
+    //missing elements just greater than k will come at low;
     int findKthPositive(vector<int>& arr, int k) {
-        int prev=1,ans=0;
-        int n=arr.size();
-        int i=0;
-        while(k>0 and i<n)
+        int l=0,h=arr.size()-1;
+        while(l<=h)
         {
-            if(prev==arr[i])
-                i++;
+            int mid=(l+h)/2;
+            if(arr[mid]-(mid+1)<k)
+                l=mid+1;
             else
-                k--;
-            ans=prev;
-            prev++;
+                h=mid-1;
         }
-        return k+ans;
+        return l+k;
     }
 };
