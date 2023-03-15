@@ -1,40 +1,37 @@
 class Solution {
 public:
-    int dp1[101];
-    int dp2[101];
-     int solve2(int i,vector<int> &nums){
-        
-        if(i>=nums.size()){
-            return 0;
+    int maxi(vector<int> &nums)
+    {
+        int n=nums.size();
+        int prev2=0;
+        int prev=nums[0];
+        int curr=nums[0];
+        for(int i=1;i<n;i++)
+        {
+            int take=nums[i];
+            if(i>=2)
+                take+=prev2;
+            int notake=0 + prev;
+            curr=max(take, notake);
+            prev2=prev;
+            prev=curr;
         }
-        if(dp2[i]!=-1)
-            return dp2[i];
-        
-        int take=solve2(i+2,nums)+nums[i];
-        int nottake=solve2(i+1,nums)+0;
-        dp2[i]= max(take,nottake);
-        return dp2[i];
-    }
-    int solve1(int i,vector<int> &nums){
-        
-        if(i>=nums.size()-1){
-            return 0;
-        }
-        if(dp1[i]!=-1)
-            return dp1[i];
-        
-        int take=solve1(i+2,nums)+nums[i];
-        int nottake=solve1(i+1,nums)+0;
-        dp1[i]= max(take,nottake);
-        return dp1[i];
+        return curr;
     }
     int rob(vector<int>& nums) {
-        if(nums.size()==1)
+        int n=nums.size();
+        if(n==1)
             return nums[0];
-        memset(dp1,-1,sizeof(dp1));
-        memset(dp2,-1,sizeof(dp2));
-        int ans1= solve1(0,nums);
-        int ans2=solve2(1,nums);
+        vector<int> temp1,temp2;
+        for(int i=0;i<n;i++)
+        {
+            if(i!=0)
+                temp1.push_back(nums[i]);
+            if(i!=n-1)
+                temp2.push_back(nums[i]);
+        }
+        int ans1=maxi(temp1);
+        int ans2=maxi(temp2);
         return max(ans1,ans2);
     }
 };
