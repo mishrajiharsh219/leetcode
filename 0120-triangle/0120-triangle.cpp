@@ -1,32 +1,21 @@
 class Solution {
 public:
-    int solve(int i,int j,vector<vector<int>>& t,vector<vector<int>>& dp)
-    {
-        if(i==0 and j==0)
-            return t[0][0];
-        if(i<0 or j<0)
-            return INT_MAX;
-        if(j>i)
-            return INT_MAX;
-        if(dp[i][j]!=-1)
-            return dp[i][j];
-        int ans=INT_MAX;
-        
-            int one=solve(i-1,j,t,dp);
-            int two=solve(i-1,j-1,t,dp);
-            ans=min(one,two);
-        
-         dp[i][j]=ans+t[i][j];
-        return dp[i][j];
-    }
     int minimumTotal(vector<vector<int>>& t) {
-      int m=t.size();
-      int ans=INT_MAX;
-      vector<vector<int>> dp(m,vector<int>(m,-1));  
-      for(int i=0;i<m;i++)
-      {
-          ans=min(ans,solve(m-1,i,t,dp));
-      }
-        return ans;  
+        int n=t.size();
+        vector<vector<int>> dp(n,vector<int>(n,0));
+        for(int i=0;i<=n-1;i++)
+        {
+            dp[n-1][i]=t[n-1][i];
+        }
+        for(int i=n-2;i>=0;i--)
+        {
+            for(int j=i;j>=0;j--)
+            {
+                int down=t[i][j]+dp[i+1][j];
+                int dg=t[i][j]+dp[i+1][j+1];
+                dp[i][j]=min(down,dg);
+            }
+        }
+        return dp[0][0];
     }
 };
