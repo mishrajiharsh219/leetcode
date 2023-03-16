@@ -2,20 +2,22 @@ class Solution {
 public:
     int minimumTotal(vector<vector<int>>& t) {
         int n=t.size();
-        vector<vector<int>> dp(n,vector<int>(n,0));
+        vector<int> next(n,0);
         for(int i=0;i<=n-1;i++)
         {
-            dp[n-1][i]=t[n-1][i];
+            next[i]=t[n-1][i];
         }
         for(int i=n-2;i>=0;i--)
         {
+            vector<int> curr(i+1,0);
             for(int j=i;j>=0;j--)
             {
-                int down=t[i][j]+dp[i+1][j];
-                int dg=t[i][j]+dp[i+1][j+1];
-                dp[i][j]=min(down,dg);
+                int down=t[i][j]+next[j];
+                int dg=t[i][j]+next[j+1];
+                curr[j]=min(down,dg);
             }
+            next=curr;
         }
-        return dp[0][0];
+        return next[0];
     }
 };
