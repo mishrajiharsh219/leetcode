@@ -10,27 +10,22 @@ public:
     // //     but if multiple prefixes have xor ==0
     //         then ans+=nC2+number of those prefixes also
     long long beautifulSubarrays(vector<int>& nums) {
-        long long ans=0;
-        unordered_map<long long,long long> mp;
-        int x=0;
-        for(int i=0;i<nums.size();i++)
-        {
-            x=x^nums[i];
-            if(mp.find(x)!=mp.end())
-                mp[x]++;
-            else
-                mp[x]=1;
+         unordered_map<int,int> mp;
+        
+        int curr=0;
+        
+        long long count=0;
+        for(int i=0;i<nums.size();i++){
+            curr = curr^nums[i];
+            
+            if(curr == 0) count++;
+            
+            if(mp.find(curr) != mp.end()){
+                count += mp[curr];
+            }
+                mp[curr]++;
         }
-     
-        for(auto it:mp)
-        {
-            long long i=it.first;
-            long long j=it.second;
-            if(i==0)
-                ans+=(j*(j+1))/2;
-            else
-                ans+=(j*(j-1))/2;
-        }
-        return ans;
+        
+        return count;
     }
 };
