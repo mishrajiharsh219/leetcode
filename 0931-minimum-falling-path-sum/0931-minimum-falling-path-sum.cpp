@@ -1,20 +1,31 @@
 class Solution {
 public:
-    int minFallingPathSumHelper(vector<vector<int>>& matrix, int r, int c, vector<vector<int>>& dp){
-        if(r == 0 and c < matrix[0].size() and c >= 0) return matrix[r][c]; 
-        if(c >= matrix[0].size() or c < 0) return INT_MAX;
-        
-        if(dp[r][c] != INT_MAX) return dp[r][c];
-        return dp[r][c] = matrix[r][c] + min(min(minFallingPathSumHelper(matrix, r-1, c+1, dp), minFallingPathSumHelper(matrix, r-1, c, dp)), minFallingPathSumHelper(matrix, r-1, c-1, dp));
-        
-    }
-    int minFallingPathSum(vector<vector<int>>& matrix) {
-        int rows = matrix.size(), cols = matrix[0].size();
-        vector<vector<int>> dp(rows+1, vector<int>(cols+1, INT_MAX));
-        int ans = INT_MAX;
-        for(int c=0; c < cols; c++){
-            ans = min(ans, minFallingPathSumHelper(matrix, rows-1, c, dp));
+    int minFallingPathSum(vector<vector<int>>& g) {
+        int m=g.size();
+        int n=g[0].size();
+        vector<vector<int>> dp(m,vector<int>(n,0));
+        for(int i=0;i<n;i++)
+        {
+            dp[0][i]=g[0][i];
         }
+        for(int i=1;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                int c1=INT_MAX,c2=INT_MAX,c3=INT_MAX;
+                c1=g[i][j]+dp[i-1][j];
+                if(j-1>=0)
+                c2=g[i][j]+dp[i-1][j-1];
+                if(j+1<n)
+                c3=g[i][j]+dp[i-1][j+1];
+                dp[i][j]=min(c1,min(c2,c3));
+            }
+        }
+        int ans=INT_MAX;
+       for(int i=0;i<n;i++)
+       {
+           ans=min(ans,dp[m-1][i]);
+       }
         return ans;
     }
 };
