@@ -3,21 +3,20 @@ public:
     int numDistinct(string s, string t) {
          int m=s.length();
         int n=t.size();
-        vector<vector<double>> dp(m+1,vector<double>(n+1,0));
+        vector<double> prev(n+1,0);
         
-        for(int i=0;i<=m;i++)
-            dp[i][0]=1;
+            prev[0]=1;
         
         for(int i=1;i<=m;i++)
         {
-            for(int j=1;j<=n;j++)
+            for(int j=n;j>=1;j--)
             {
                 if(s[i-1]==t[j-1])
-            dp[i][j]=dp[i-1][j-1]+dp[i-1][j];
+            prev[j]=prev[j-1]+prev[j];
                 else
-            dp[i][j]=dp[i-1][j];
+            prev[j]=prev[j];
             }
         }
-        return int(dp[m][n]);
+        return int(prev[n]);
     }
 };
