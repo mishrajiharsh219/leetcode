@@ -1,27 +1,33 @@
 class Solution {
 public:
-    int solve(int ind1,int ind2,string &s,string &t,vector<vector<int>> &dp)
-    {
-        if(ind2<0)
-           return ind1+1;    //t gets empty
-        if(ind1<0)
-            return ind2+1;      //s got empty
-            
-        if(dp[ind1][ind2]!=-1)
-            return dp[ind1][ind2];
-        
-        if(s[ind1]==t[ind2])
-            return dp[ind1][ind2]=0+solve(ind1-1,ind2-1,s,t,dp);
-        
-        int insert=1+solve(ind1,ind2-1,s,t,dp);
-        int deletion=1+solve(ind1-1,ind2,s,t,dp);
-        int replace=1+solve(ind1-1,ind2-1,s,t,dp);
-        return dp[ind1][ind2]=min(insert,min(deletion,replace));
-    }
     int minDistance(string s, string t) {
+        
         int m=s.length();
         int n=t.size();
-        vector<vector<int>> dp(m+1,vector<int>(n+1,-1));
-        return solve(m-1,n-1,s,t,dp);
+        vector<vector<int>> dp(m+1,vector<int>(n+1,0));
+        
+        for(int i=0;i<=m;i++)
+        {
+            dp[i][0]=i;
+        }
+         for(int i=0;i<=n;i++)
+        {
+            dp[0][i]=i;
+        }
+        for(int i=1;i<=m;i++)
+        {
+            for(int j=1;j<=n;j++)
+            {
+                if(s[i-1]==t[j-1])
+             dp[i][j]=0+dp[i-1][j-1];
+        else{
+        int insert=1+dp[i][j-1];
+        int deletion=1+dp[i-1][j];
+        int replace=1+dp[i-1][j-1];
+         dp[i][j]=min(insert,min(deletion,replace));
+            }
+            }
+        }
+        return dp[m][n];
     }
 };
