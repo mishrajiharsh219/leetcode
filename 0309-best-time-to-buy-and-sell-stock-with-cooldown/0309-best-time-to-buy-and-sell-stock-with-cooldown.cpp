@@ -1,23 +1,27 @@
 class Solution {
 public:
-    int maxProfit(vector<int>& p) {
-        	if (p.size() < 2)
-		return 0;
-	int i, sz = p.size();
-	int ret = 0;
-	vector<int> buy(sz, 0);
-	vector<int> sell(sz, 0);
-	buy[0] = -p[0];
-	for (i = 1; i < sz; ++i)
-	{
-		sell[i] = max(buy[i - 1] + p[i], sell[i - 1] - p[i - 1] + p[i]);
-		if (ret < sell[i]) //record the max sell[i]
-			ret = sell[i];
-		if (1 == i)
-			buy[i] = buy[0] + p[0] - p[1];
-		else
-			buy[i] = max(sell[i - 2] - p[i], buy[i - 1] + p[i - 1] - p[i]);
-	}
-	return ret;
+    int solve(int ind,int buy,vector<int> &prices,vector<vector<int>> &dp)
+    {
+        int n=prices.size();
+        if(ind==prices.size())
+            return 0;
+        if(dp[ind][buy]!=-1)
+            return dp[ind][buy];
+        int profit=0;
+        if(buy)
+        {
+            profit=max(-prices[ind]+solve(ind+1,0,prices,dp),0+solve(ind+1,1,prices,dp));
+        }
+        else
+        {
+            profit=max(prices[ind]+solve(min(ind+2,n),1,prices,dp),0+solve(ind+1,0,prices,dp));
+        }
+        return dp[ind][buy]=profit;
+    }
+    int maxProfit(vector<int>& prices) {
+        int n=prices.size();
+        int buy=1;
+        vector<vector<int>> dp(n,vector<int>(2,-1));
+        return solve(0,buy,prices,dp);
     }
 };
