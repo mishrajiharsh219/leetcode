@@ -5,12 +5,14 @@ public:
         if(n==0)
             return 0;
         vector<int> temp;
+        int len=1;
         temp.push_back(nums[0]);
         for(int i=1;i<n;i++)
         {
             if(nums[i]>temp.back())
             {
                 temp.push_back(nums[i]);
+                len++;
             }
             else
             {
@@ -18,6 +20,6 @@ public:
                 temp[pos]=nums[i];
             }
         }
-        return temp.size();
+        return len;
     }
 };
