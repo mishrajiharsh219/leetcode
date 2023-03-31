@@ -12,7 +12,7 @@ public:
         int second=0;
         while(first<a.size())
         {
-            if(a[first]==b[second])
+            if(second<b.size() and a[first]==b[second])
             {
                 first++;
                 second++;
