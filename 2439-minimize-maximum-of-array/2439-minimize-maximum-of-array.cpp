@@ -1,29 +1,14 @@
 class Solution {
 public:
-    bool valid(int mid,vector<int> &nums)
-    {
-        long sum=0;
+    int minimizeArrayValue(vector<int>& nums) {
+        long long res=0;
+        long long sum=0;
         for(int i=0;i<nums.size();i++)
         {
             sum+=nums[i];
-            if(sum>long(long(i+1)*mid))
-                return false;
+           long long temp=(sum+i)/(i+1);  //ceil(sum/i+1)
+            res=max(res,temp);
         }
-        return true;
-    }
-    int minimizeArrayValue(vector<int>& nums) {
-        int low=0;
-        int high=*max_element(nums.begin(),nums.end());
-        while(low<high)
-        {
-            int mid=(low+high)/2;
-            if(valid(mid,nums))
-            {
-                high=mid;
-            }
-            else
-                low=mid+1;
-        }
-        return low;
+        return int(res);
     }
 };
