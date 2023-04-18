@@ -1,12 +1,12 @@
 class Solution {
 public:
-    int solve(int ind,vector<int> &nums,int k,vector<int> &dp)
-    {
-        if(ind==nums.size())
-            return 0;
-        if(dp[ind]!=-1)
-            return dp[ind];
-        int ans=INT_MIN;
+    int maxSumAfterPartitioning(vector<int>& nums, int k) {
+        int n=nums.size();
+        vector<int> dp(n+1,0);
+        dp[n]=0;
+        for(int ind=n-1;ind>=0;ind--)
+        {
+             int ans=INT_MIN;
         int maxi=INT_MIN;
         int n=nums.size();
         int len=0;
@@ -15,14 +15,11 @@ public:
             len++;
             maxi=max(maxi,nums[i]);
             long long sum=maxi*len;
-            int cost=int(sum)+solve(i+1,nums,k,dp);
+            int cost=int(sum)+dp[i+1];
             ans=max(ans,cost);
         }
-        return dp[ind]=ans;
-    }
-    int maxSumAfterPartitioning(vector<int>& arr, int k) {
-        int n=arr.size();
-        vector<int> dp(n,-1);
-        return solve(0,arr,k,dp);
+         dp[ind]=ans;
+        }
+        return dp[0];
     }
 };
