@@ -15,9 +15,8 @@ public:
         int skip_1 = solve(nums1,nums2,i+1,j,dp);
         int skip_2 = solve(nums1, nums2, i, j+1,dp);
         int take_12 = nums1[i]*nums2[j] + solve(nums1, nums2, i+1, j+1,dp);
-        int skip_12 = solve(nums1, nums2, i+1, j+1,dp);
         
-        return dp[i][j] = max({skip_1, skip_2, take_12, skip_12});
+        return dp[i][j] = max({skip_1, skip_2, take_12,});
     }
    
     int maxDotProduct(vector<int>& nums1, vector<int>& nums2) {
